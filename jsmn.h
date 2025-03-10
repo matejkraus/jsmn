@@ -71,6 +71,9 @@ typedef struct jsmntok {
   int start;
   int end;
   int size;
+#ifdef JSMN_TOKNEXT
+  int toknext;
+#endif
 #ifdef JSMN_PARENT_LINKS
   int parent;
 #endif
@@ -112,6 +115,9 @@ static jsmntok_t *jsmn_alloc_token(jsmn_parser *parser, jsmntok_t *tokens,
   tok = &tokens[parser->toknext++];
   tok->start = tok->end = -1;
   tok->size = 0;
+#ifdef JSMN_TOKNEXT
+	tok->toknext = 0;
+#endif
 #ifdef JSMN_PARENT_LINKS
   tok->parent = -1;
 #endif
@@ -342,7 +348,10 @@ JSMN_API int jsmn_parse(jsmn_parser *parser, const char *js, const size_t len,
           }
           parser->toksuper = -1;
           token->end = parser->pos + 1;
-          break;
+#ifdef JSMN_TOKNEXT
+          token->toknext = parser->toknext;
+#endif
+        break;
         }
       }
       /* Error if unmatched closing bracket */
