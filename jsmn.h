@@ -69,11 +69,15 @@ enum jsmnerr {
 typedef struct jsmntok {
   jsmntype_t type;
   int start;
-  int end;
-  int size;
 #ifdef JSMN_TOKNEXT
-  int toknext;
+  union {
+    int end;
+    int toknext;
+  };
+#else
+  int end;
 #endif
+  int size;
 #ifdef JSMN_PARENT_LINKS
   int parent;
 #endif
@@ -115,9 +119,6 @@ static jsmntok_t *jsmn_alloc_token(jsmn_parser *parser, jsmntok_t *tokens,
   tok = &tokens[parser->toknext++];
   tok->start = tok->end = -1;
   tok->size = 0;
-#ifdef JSMN_TOKNEXT
-	tok->toknext = 0;
-#endif
 #ifdef JSMN_PARENT_LINKS
   tok->parent = -1;
 #endif
