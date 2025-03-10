@@ -34,6 +34,7 @@ clean:
 	rm -f *.o example/*.o
 	rm -f simple_example
 	rm -f jsondump
+	rm -f tokendump
 
 .PHONY: clean test
 
