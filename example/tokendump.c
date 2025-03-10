@@ -7,6 +7,8 @@
 #include <string.h>
 
 void dump(char *js, jsmntok_t* tokens) {
+  puts("index    type[size] start-end toknext value");
+  puts("-------------------------------------------");
   int tokenCount = tokens[0].toknext;
   for (int ti = 0; ti < tokenCount; ti++) {
     jsmntok_t t = tokens[ti];
