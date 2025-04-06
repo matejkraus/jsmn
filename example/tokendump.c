@@ -1,4 +1,4 @@
-#define JSMN_TOKNEXT
+//#define JSMN_TOKNEXT
 
 #include "../jsmn.h"
 
@@ -6,10 +6,9 @@
 #include <stdlib.h>
 #include <string.h>
 
-void dump(char *js, jsmntok_t* tokens) {
+void dump(char *js, jsmntok_t* tokens, int tokenCount) {
   puts("index    type[size] start-end toknext value");
   puts("-------------------------------------------");
-  int tokenCount = tokens[0].toknext;
   for (int ti = 0; ti < tokenCount; ti++) {
     jsmntok_t t = tokens[ti];
     char *type;
@@ -73,6 +72,6 @@ int main(int argc, char *args[]) {
     jsmn_init(&parser);
     jsmn_parse(&parser, (const char *)js, len, tokens, tokenCount);
     // and dump finally
-    dump(js, tokens);
+    dump(js, tokens, tokenCount);
   }
 }
