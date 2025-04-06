@@ -27,8 +27,8 @@ void dump(char *js, jsmntok_t* tokens) {
       type = "STRING";
       break;
     }
-    printf("%3d: %9s[%03d]: %4d-%4d: %3d", ti, type, t.size, t.start, t.end,
-           t.toknext);
+    printf("%3d: %9s[%03d]: %4d-%4d: %4d", ti, type, t.size, t.start, t.end,
+           jsmn_next_token(tokens, tokenCount, ti));
     switch (t.type) {
     case JSMN_PRIMITIVE:
     case JSMN_STRING:
